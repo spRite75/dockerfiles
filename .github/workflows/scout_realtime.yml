@@ -20,6 +20,6 @@ jobs:
         DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
       run: docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
     - name: Build
-      run: docker build . --file ./scout_realtime/Dockerfile -t ${{secrets.DOCKER_USER}}/scout_realtime:$(date +%s)
+      run: docker build . --file ./scout_realtime/Dockerfile -t ${{secrets.DOCKER_USER}}/scout_realtime
     - name: Push
       run: docker push ${{secrets.DOCKER_USER}}/scout_realtime
