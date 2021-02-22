@@ -1,5 +1,5 @@
 FROM arm32v6/alpine:3.7
-COPY qemu-arm-static /usr/bin
+COPY ../../qemu-arm-static /usr/bin
 RUN apk update && \
 	apk upgrade && \
 	apk add curl wget bash ruby ruby-json && \
