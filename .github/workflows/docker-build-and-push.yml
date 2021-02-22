@@ -14,11 +14,15 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: docker login
+    - name: Login to Docker Hub
       env:
         DOCKER_USER: ${{secrets.DOCKER_USER}}
         DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
       run: docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+    - name: Download QEMU
+      run: curl -L https://github.com/balena-io/qemu/releases/download/v3.0.0%2Bresin/qemu-3.0.0+resin-arm.tar.gz | tar zxvf - -C . && mv qemu-3.0.0+resin-arm/qemu-arm-static .
+    - name: Register QEMU
+      run: docker run --rm --privileged multiarch/qemu-user-static:register --reset
     - name: Build arm32v6.scout_realtime
       run: docker build . --file ./arm32v6/scout_realtime/Dockerfile -t arm32v6.scout_realtime:$(date +%s)
     - name: Push
