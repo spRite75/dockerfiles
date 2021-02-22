@@ -24,9 +24,7 @@ jobs:
           DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
         run: |
           apk add docker
-          apk update
-          service docker start
-          service docker status
+          dockerd >/tmp/docker.stdout 2>/tmp/docker.stderr &
           docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
           docker build . --file ./arm32v6/scout_realtime/Dockerfile -t ${{secrets.DOCKER_USER}}/arm32v6.scout_realtime
           docker push ${{secrets.DOCKER_USER}}/arm32v6.scout_realtime
