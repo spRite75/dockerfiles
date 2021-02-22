@@ -1,4 +1,4 @@
-name: Docker Image CI
+name: Build and Push sprite75/arm32v6.scout_realtime
 
 on:
   push:
@@ -23,7 +23,7 @@ jobs:
       run: curl -L https://github.com/balena-io/qemu/releases/download/v3.0.0%2Bresin/qemu-3.0.0+resin-arm.tar.gz | tar zxvf - -C . && mv qemu-3.0.0+resin-arm/qemu-arm-static .
     - name: Register QEMU
       run: docker run --rm --privileged multiarch/qemu-user-static:register --reset
-    - name: Build arm32v6.scout_realtime
+    - name: Build
       run: docker build . --file ./arm32v6/scout_realtime/Dockerfile -t arm32v6.scout_realtime:$(date +%s)
     - name: Push
       run: docker push ${{secrets.DOCKER_USER}}/arm32v6.scout_realtime
