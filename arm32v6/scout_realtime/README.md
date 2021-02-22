@@ -2,7 +2,7 @@
 Runs (scout_realtime)[https://scoutapp.github.io/scout_realtime/] in Docker on older ARM cpus like that of the Raspberry Pi Zero
 
 ## Usage
-```shell
+```bash
 docker run \
   -d
   --pid=host
