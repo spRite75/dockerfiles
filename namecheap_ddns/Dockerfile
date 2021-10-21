@@ -1,5 +1,4 @@
 FROM alpine
-
 RUN apk update && apk add alpine-conf curl
 
 COPY ./entrypoint.sh /tmp/entrypoint.sh
