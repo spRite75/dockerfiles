@@ -1,6 +1,6 @@
 FROM alpine
 
-RUN apk update && apk add alpine-conf curl
+RUN apk update && apk add alpine-conf curl && setup-timezone -iz UTC
 
 COPY ./entrypoint.sh /tmp/entrypoint.sh
 RUN chmod +x /tmp/entrypoint.sh
