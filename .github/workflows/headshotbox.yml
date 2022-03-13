@@ -21,6 +21,18 @@ jobs:
     - name: Check buildx
       run: docker buildx ls
     - name: Build
-      run: docker build . --file ./headshotbox/Dockerfile -t ${{secrets.DOCKER_USER}}/headshotbox
+      run: >
+        docker build .
+          --file ./headshotbox/Dockerfile
+          -t ${{secrets.DOCKER_USER}}/headshotbox:latest
+          -t ${{secrets.DOCKER_USER}}/headshotbox:$(cat ./headshotbox/version) 
     - name: Push
-      run: docker push ${{secrets.DOCKER_USER}}/headshotbox
+      run: docker push -a ${{secrets.DOCKER_USER}}/headshotbox
+    - name: Update description
+      uses: peter-evans/dockerhub-description@v2
+      with:
+        username: ${{secrets.DOCKER_USER}}
+        password: ${{secrets.DOCKER_PASSWORD}}
+        repository: ${{secrets.DOCKER_USER}}/headshotbox
+        short-description: Headshotbox in docker!
+        readme-filepath: headshotbox/README.md

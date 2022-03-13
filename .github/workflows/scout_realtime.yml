@@ -23,6 +23,18 @@ jobs:
     - name: Check buildx
       run: docker buildx ls
     - name: Build
-      run: docker build . --file ./scout_realtime/Dockerfile -t ${{secrets.DOCKER_USER}}/scout_realtime
+      run: >
+        docker build .
+          --file ./scout_realtime/Dockerfile
+          -t ${{secrets.DOCKER_USER}}/scout_realtime:latest
+          -t ${{secrets.DOCKER_USER}}/scout_realtime:$(cat ./scout_realtime/version) 
     - name: Push
-      run: docker push ${{secrets.DOCKER_USER}}/scout_realtime
+      run: docker push -a ${{secrets.DOCKER_USER}}/scout_realtime
+    - name: Update description
+      uses: peter-evans/dockerhub-description@v2
+      with:
+        username: ${{secrets.DOCKER_USER}}
+        password: ${{secrets.DOCKER_PASSWORD}}
+        repository: ${{secrets.DOCKER_USER}}/scout_realtime
+        short-description: Scout Realtime in docker!
+        readme-filepath: scout_realtime/README.md

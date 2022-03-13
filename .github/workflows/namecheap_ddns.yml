@@ -19,6 +19,18 @@ jobs:
         DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
       run: docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
     - name: Build
-      run: docker build ./namecheap_ddns -t ${{secrets.DOCKER_USER}}/namecheap_ddns
+      run: >
+        docker build .
+          --file ./namecheap_ddns/Dockerfile
+          -t ${{secrets.DOCKER_USER}}/namecheap_ddns:latest
+          -t ${{secrets.DOCKER_USER}}/namecheap_ddns:$(cat ./namecheap_ddns/version) 
     - name: Push
-      run: docker push ${{secrets.DOCKER_USER}}/namecheap_ddns
+      run: docker push -a ${{secrets.DOCKER_USER}}/namecheap_ddns
+    - name: Update description
+      uses: peter-evans/dockerhub-description@v2
+      with:
+        username: ${{secrets.DOCKER_USER}}
+        password: ${{secrets.DOCKER_PASSWORD}}
+        repository: ${{secrets.DOCKER_USER}}/namecheap_ddns
+        short-description: Dynamic DNS in docker!
+        readme-filepath: namecheap_ddns/README.md
