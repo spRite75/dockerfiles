@@ -3,9 +3,7 @@ name: Build and Push sprite75/scout_realtime
 on:
   push:
     branches: [ main ]
-    paths:
-      - "scout_realtime/**"
-      - "arm32v6/scout_realtime/**"
+    paths: [ ".github/workflows/scout_realtime.yml", "scout_realtime/**" ]
 
 jobs:
 
@@ -23,11 +21,7 @@ jobs:
     - name: Check buildx
       run: docker buildx ls
     - name: Build
-      run: >
-        docker build .
-        --file ./scout_realtime/Dockerfile
-        -t ${{secrets.DOCKER_USER}}/scout_realtime:latest
-        -t ${{secrets.DOCKER_USER}}/scout_realtime:$(cat ./scout_realtime/version) 
+      run: docker build . --file ./scout_realtime/Dockerfile -t ${{secrets.DOCKER_USER}}/scout_realtime:latest -t ${{secrets.DOCKER_USER}}/scout_realtime:$(cat ./scout_realtime/version) 
     - name: Push
       run: docker push -a ${{secrets.DOCKER_USER}}/scout_realtime
     - name: Update description

@@ -3,7 +3,7 @@ name: Build and Push sprite75/headshotbox
 on:
   push:
     branches: [ main ]
-    paths: [ "headshotbox/**" ]
+    paths: [ ".github/workflows/headshotbox.yml", "headshotbox/**" ]
 
 jobs:
 
@@ -21,11 +21,7 @@ jobs:
     - name: Check buildx
       run: docker buildx ls
     - name: Build
-      run: >
-        docker build .
-        --file ./headshotbox/Dockerfile
-        -t ${{secrets.DOCKER_USER}}/headshotbox:latest
-        -t ${{secrets.DOCKER_USER}}/headshotbox:$(cat ./headshotbox/version) 
+      run: docker build . --file ./headshotbox/Dockerfile -t ${{secrets.DOCKER_USER}}/headshotbox:latest -t ${{secrets.DOCKER_USER}}/headshotbox:$(cat ./headshotbox/version) 
     - name: Push
       run: docker push -a ${{secrets.DOCKER_USER}}/headshotbox
     - name: Update description

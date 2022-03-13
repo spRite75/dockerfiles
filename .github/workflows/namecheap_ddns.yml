@@ -3,7 +3,7 @@ name: Build and Push sprite75/namecheap_ddns
 on:
   push:
     branches: [ main ]
-    paths: [ "namecheap_ddns/**" ]
+    paths: [ ".github/workflows/namecheap_ddns.yml", "namecheap_ddns/**" ]
 
 jobs:
 
@@ -19,11 +19,7 @@ jobs:
         DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
       run: docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
     - name: Build
-      run: >
-        docker build .
-        --file ./namecheap_ddns/Dockerfile
-        -t ${{secrets.DOCKER_USER}}/namecheap_ddns:latest
-        -t ${{secrets.DOCKER_USER}}/namecheap_ddns:$(cat ./namecheap_ddns/version) 
+      run: docker build . --file ./namecheap_ddns/Dockerfile -t ${{secrets.DOCKER_USER}}/namecheap_ddns:latest -t ${{secrets.DOCKER_USER}}/namecheap_ddns:$(cat ./namecheap_ddns/version) 
     - name: Push
       run: docker push -a ${{secrets.DOCKER_USER}}/namecheap_ddns
     - name: Update description
