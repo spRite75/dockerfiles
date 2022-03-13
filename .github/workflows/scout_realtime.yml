@@ -3,6 +3,9 @@ name: Build and Push sprite75/scout_realtime
 on:
   push:
     branches: [ main ]
+    paths:
+      - "scout_realtime/**"
+      - "arm32v6/scout_realtime/**"
 
 jobs:
 

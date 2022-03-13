@@ -3,6 +3,7 @@ name: Build and Push sprite75/namecheap_ddns
 on:
   push:
     branches: [ main ]
+    paths: [ "namecheap_ddns/**" ]
 
 jobs:
 
