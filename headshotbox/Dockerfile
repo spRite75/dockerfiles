@@ -1,14 +1,18 @@
-FROM eclipse-temurin:8-alpine
+FROM eclipse-temurin:8
 RUN mkdir -p /home/headshotbox
 WORKDIR /home/headshotbox
 
 ENV HEADSHOTBOX_VERSION 0.18.2
 ENV XDG_CONFIG_HOME /config
 
-RUN apk update && apk add \
-    bash \
-    wget \ 
-    libc6-compat
+RUN dpkg --add-architecture i386 \
+    && apt-get update \
+    && apt-get upgrade -y \
+    && apt-get install -y \
+        libc6-i386 \
+        wget \
+        zip \
+        unzip
 
 RUN wget https://github.com/bugdone/headshotbox/releases/download/${HEADSHOTBOX_VERSION}/headshotbox-${HEADSHOTBOX_VERSION}-linux.zip \
     && unzip headshotbox-${HEADSHOTBOX_VERSION}-linux.zip \
