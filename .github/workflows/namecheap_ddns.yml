@@ -19,7 +19,7 @@ jobs:
         DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
       run: docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
     - name: Build
-      run: docker build . --file ./namecheap_ddns/Dockerfile -t ${{secrets.DOCKER_USER}}/namecheap_ddns:latest -t ${{secrets.DOCKER_USER}}/namecheap_ddns:$(cat ./namecheap_ddns/version) 
+      run: docker build ./namecheap_ddns -t ${{secrets.DOCKER_USER}}/namecheap_ddns:latest -t ${{secrets.DOCKER_USER}}/namecheap_ddns:$(cat ./namecheap_ddns/version) 
     - name: Push
       run: docker push -a ${{secrets.DOCKER_USER}}/namecheap_ddns
     - name: Update description
