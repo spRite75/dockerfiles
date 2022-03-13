@@ -8,7 +8,7 @@ ENV XDG_CONFIG_HOME /config
 RUN apk update && apk add \
     bash \
     wget \ 
-    libc6-i386
+    libc6-compat
 
 RUN wget https://github.com/bugdone/headshotbox/releases/download/${HEADSHOTBOX_VERSION}/headshotbox-${HEADSHOTBOX_VERSION}-linux.zip \
     && unzip headshotbox-${HEADSHOTBOX_VERSION}-linux.zip \
