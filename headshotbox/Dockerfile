@@ -5,9 +5,10 @@ WORKDIR /home/headshotbox
 ENV HEADSHOTBOX_VERSION 0.18.2
 ENV XDG_CONFIG_HOME /config
 
-RUN apk add \
+RUN apk update && apk add \
     bash \
-    wget
+    wget \ 
+    libc6-i386
 
 RUN wget https://github.com/bugdone/headshotbox/releases/download/${HEADSHOTBOX_VERSION}/headshotbox-${HEADSHOTBOX_VERSION}-linux.zip \
     && unzip headshotbox-${HEADSHOTBOX_VERSION}-linux.zip \
