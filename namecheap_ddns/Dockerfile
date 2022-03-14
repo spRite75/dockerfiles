@@ -2,7 +2,7 @@ FROM alpine
 
 RUN apk update && apk add alpine-conf curl && setup-timezone -iz UTC
 
-COPY ./entrypoint.sh /tmp/entrypoint.sh
+COPY namecheap_ddns/entrypoint.sh /tmp/entrypoint.sh
 RUN chmod +x /tmp/entrypoint.sh
 
 ENV DDNS_DOMAIN "example.com"

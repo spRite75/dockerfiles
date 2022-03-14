@@ -20,7 +20,7 @@ RUN wget https://github.com/bugdone/headshotbox/releases/download/${HEADSHOTBOX_
     && mv headshotbox-${HEADSHOTBOX_VERSION}-linux/* . \
     && rm -r headshotbox-${HEADSHOTBOX_VERSION}-linux/
 
-RUN chmod +x headshotbox.sh demoinfogo
+COPY headshotbox/entrypoint.sh entrypoint.sh
+RUN chmod +x headshotbox.sh demoinfogo entrypoint.sh
 
-CMD java -jar hsbox-${HEADSHOTBOX_VERSION}-standalone.jar \
-    --port 4000
+ENTRYPOINT ./entrypoint.sh
